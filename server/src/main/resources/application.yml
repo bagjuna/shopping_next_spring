@@ -1,0 +1,49 @@
+# MySQL Config
+spring:
+  application:
+    name: 'apisever'
+  datasource:
+    url: jdbc:mysql://localhost:3306/springdb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: springdbuser
+    password: springdbuser
+    hikari:
+      maximum-pool-size: 5   # 최대 커넥션 개수
+      minimum-idle: 2         # 최소 유휴 커넥션 개수
+      idle-timeout: 30000     # 커넥션이 유휴 상태로 유지되는 최대 시간 (밀리초)
+      max-lifetime: 1800000   # 커넥션의 최대 생명주기 (밀리초)
+      connection-timeout: 2000 # 커넥션 요청 시 최대 대기 시간 (밀리초)
+
+#JPA Config
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: always 
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 40MB
+      enabled: true
+      location: /Users/bagjun-a/temp/images
+      file-size-threshold: 1MB
+  web:
+    resources:
+      static-locations: file:/Users/bagjun-a/temp/images
+#로그 설정   
+logging:
+  level:
+    org.zerock: INFO
+
+
+org:
+  zerock:
+    upload:
+      folder: /Users/bagjun-a/temp/images
+
