@@ -3,9 +3,12 @@ package org.zerock.apiserver.account.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.zerock.apiserver.account.dto.AccountDTO;
 import org.zerock.apiserver.account.dto.RefreshDTO;
-import org.zerock.apiserver.account.dto.SigninDTO;
+import org.zerock.apiserver.account.dto.request.SigninRequest;
+import org.zerock.apiserver.account.dto.reaspone.SigninResponse;
+import org.zerock.apiserver.account.entity.AccountEntity;
 import org.zerock.apiserver.account.service.AccountService;
 
 @RestController
@@ -17,33 +20,42 @@ public class AccountController {
     private final AccountService service;
 
     @PostMapping("signin")
-    public AccountDTO login(@RequestBody SigninDTO signinDTO) {
+    public SigninResponse login(@RequestBody SigninRequest signinRequest) {
 
         log.info("signin...............");
-        log.info(signinDTO);
-        return service.getOne(signinDTO.getUsername(), signinDTO.getPassword());
+        log.info(signinRequest);
+        return service.getOne(signinRequest.getEmail(), signinRequest.getPassword());
 
     }
 
     @PostMapping("register")
-    public AccountDTO register(AccountDTO accountDTO) {
+    public SigninResponse register(SigninRequest accountDTO) {
 
         log.info("register...............");
         log.info(accountDTO);
 
-        service.register(accountDTO);
+        AccountEntity register = service.register(accountDTO);
 
-        return accountDTO;
+        return SigninResponse.builder()
+            .email(register.getEmail())
+            .password(register.getPassword())
+            .nickname(register.getNickname())
+            .role(register.getRole())
+            .joinDate(register.getJoinDate())
+            .modifiedDate(register.getJoinDate())
+            .accessToken(register.getAccessToken())
+            .refreshToken(register.getRefreshToken())
+            .build();
+
     }
 
-
     @PostMapping("social")
-    public AccountDTO social(String email) {
+    public SigninResponse social(String email) {
 
         log.info("social...............");
         log.info(email);
 
-        AccountDTO accountDTO =  service.checkSocial(email);
+        SigninResponse accountDTO =  service.checkSocial(email);
 
         log.info("accountDTO................");
         log.info(accountDTO);
@@ -52,18 +64,18 @@ public class AccountController {
     }
 
     @PutMapping("modify")
-    public AccountDTO modify(AccountDTO accountDTO) {
+    public SigninResponse modify(AccountDTO accountDTO, @RequestParam(value = "files", required = false) MultipartFile[] files) {
 
         log.info("modify................");
         log.info(accountDTO);
 
-        return service.update(accountDTO);
+        return service.update(accountDTO, files);
 
     }
 
 
     @PostMapping("refresh")
-    public AccountDTO refresh( @RequestBody RefreshDTO refreshDTO) {
+    public SigninResponse refresh( @RequestBody RefreshDTO refreshDTO) {
 
         log.info("refresh................");
         log.info(refreshDTO);

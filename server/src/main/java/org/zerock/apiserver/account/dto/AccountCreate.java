@@ -1,25 +1,22 @@
 package org.zerock.apiserver.account.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.zerock.apiserver.account.entity.AccountEntity;
 
-@Data
-@NoArgsConstructor
-public class AccountDTO {
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+public class AccountCreate {
 
 	private String email;
 
 	private String nickname;
 
 	private String role;
+
+	private String password;
 
 	private List<String> fileNames = new ArrayList<>();
 
@@ -32,6 +29,7 @@ public class AccountDTO {
 
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime modifiedDate;
+
 
 	public void addFileName(String fileName) {
 		this.fileNames.add(fileName);
@@ -51,9 +49,10 @@ public class AccountDTO {
 		return entity;
 	}
 
-	public AccountDTO(String email, String nickname, String role, LocalDateTime joinDate,
+	public AccountCreate(String email, String password, String nickname, String role, LocalDateTime joinDate,
 		LocalDateTime modifiedDate, String accessToken, String refreshToken) {
 		this.email = email;
+		this.password = password;
 		this.nickname = nickname;
 		this.role = role;
 		this.joinDate = joinDate;
@@ -62,24 +61,5 @@ public class AccountDTO {
 		this.refreshToken = refreshToken;
 
 	}
-
-	public AccountDTO(AccountEntity entity) {
-		this.email = entity.getEmail();
-		this.nickname = entity.getNickname();
-		this.role = entity.getRole();
-		this.joinDate = entity.getJoinDate();
-		this.modifiedDate = entity.getModifiedDate();
-		this.accessToken = entity.getAccessToken();
-		this.refreshToken = entity.getRefreshToken();
-
-		if (entity.getImages() != null && entity.getImages().size() > 0) {
-			this.fileNames = entity.getImages()
-				.stream()
-				.map(productImage -> productImage.getFileName()).toList();
-
-		}
-
-	}
-
 
 }

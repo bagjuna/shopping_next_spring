@@ -1,32 +1,38 @@
 'use client';
 
-import { SessionProvider } from "next-auth/react";
+import {SessionProvider} from "next-auth/react";
 
-import { Geist, Geist_Mono } from "next/font/google";
+import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
+import MainHeader from "@/components/layout/MainHeader";
+
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+    variable: "--font-geist-sans",
+    subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+    variable: "--font-geist-mono",
+    subsets: ["latin"],
 });
 
 
-export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-      <SessionProvider >
-          {children}
-      </SessionProvider>
+export default function RootLayout({children}) {
 
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+        <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+        <SessionProvider>
+            <MainHeader/>
+            <div className="pt-10 max-w-xl mx-auto">
+                {children}
+            </div>
+        </SessionProvider>
+
+        </body>
+        </html>
+    );
 }

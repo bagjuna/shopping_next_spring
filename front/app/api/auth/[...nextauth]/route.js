@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials"
 import KakaoProvider from "next-auth/providers/kakao";
-import {headers} from "next/headers";
+
 export const authOptions = {
 
     providers: [
@@ -13,17 +13,17 @@ export const authOptions = {
         CredentialsProvider({
             name: 'Credentials',
             credentials: {
-                username: {label: "Username", type: "text", placeholder: "user name"},
+                email: {label: "email", type: "text", placeholder: "email"},
                 password: {label: "Password", type: "password"}
             },
             async authorize(credentials, req) {
                 // console.log("-------------------1");
-                // console.log(credentials);
+                console.log(credentials);
 
                 const res = await fetch('http://localhost:8080/api/accounts/signin', {
                     method: 'POST',
                     body: JSON.stringify({
-                        username: credentials.username,
+                        email: credentials.email,
                         password: credentials.password
                     }),
                     headers: {'Content-Type': 'application/json'}
