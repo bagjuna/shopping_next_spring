@@ -1,27 +1,24 @@
 package org.zerock.apiserver.account.service;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.zerock.apiserver.account.dto.AccountDTO;
 import org.zerock.apiserver.account.dto.RefreshDTO;
-import org.zerock.apiserver.account.repository.AccountRepository;
-
-import java.util.Optional;
-
+import org.zerock.apiserver.account.dto.request.SigninRequest;
+import org.zerock.apiserver.account.dto.reaspone.SigninResponse;
+import org.zerock.apiserver.account.entity.AccountEntity;
 
 @Transactional
 public interface AccountService {
 
-    AccountDTO getOne(String email, String password);
+    SigninResponse getOne(String email, String password);
 
-    void register(AccountDTO accountDTO);
+    AccountEntity register(SigninRequest accountDTO);
 
-    AccountDTO checkSocial(String email);
+    SigninResponse checkSocial(String email);
 
-    AccountDTO update(AccountDTO accountDTO);
+    SigninResponse update(AccountDTO accountDTO, @RequestParam(value = "files", required = false) MultipartFile[] files);
 
-    AccountDTO refresh(RefreshDTO refreshDTO);
+    SigninResponse refresh(RefreshDTO refreshDTO);
 }

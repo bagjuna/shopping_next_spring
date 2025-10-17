@@ -7,12 +7,11 @@ import { useState } from "react"
 
 export default function AccountSigninCP() {
 
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
     const handleClickSignin = e => {
-
-        signIn('credentials', { username,password, callbackUrl: '/'});
+        signIn('credentials', { email, password, callbackUrl: '/'});
 
     }
 
@@ -30,10 +29,10 @@ export default function AccountSigninCP() {
                     <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">아이디 (이메일)</label>
                     <input
                         type="text"
-                        id="username"
-                        name="username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        id="email"
+                        name="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         placeholder="name@example.com"
                     />
@@ -70,6 +69,11 @@ export default function AccountSigninCP() {
                     className="w-full bg-yellow-400 text-black font-semibold py-2 rounded-md hover:bg-yellow-500 transition-colors flex items-center justify-center space-x-2"
                 >
                     <span>카카오로 로그인</span>
+                </button>
+                <button>
+                    <a href="/account/signup" className="text-sm text-blue-600 hover:underline mt-4 inline-block">
+                        회원가입 하러가기
+                    </a>
                 </button>
             </div>
         </div>

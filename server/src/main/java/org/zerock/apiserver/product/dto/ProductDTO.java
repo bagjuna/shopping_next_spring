@@ -46,7 +46,6 @@ public class ProductDTO {
     }
 
     public void addFileName(String fileName) {
-
         this.fileNames.add(fileName);
 
     }

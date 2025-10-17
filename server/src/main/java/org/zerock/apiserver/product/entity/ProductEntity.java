@@ -49,7 +49,6 @@ public class ProductEntity {
     }
 
     public void addImage(String fileName) {
-
         this.images.add(new ProductImage(fileName, this.images.size()));
     }
 

@@ -1,15 +1,25 @@
 package org.zerock.apiserver.account.entity;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.zerock.apiserver.product.entity.ProductImage;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tbl_account")
@@ -22,6 +32,9 @@ import java.time.LocalDateTime;
 public class AccountEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String email;
 
     private String password;
@@ -34,10 +47,21 @@ public class AccountEntity {
 
     private String refreshToken;
 
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(
+        name = "tbl_account_image", // 회원 이미지 정보를 저장할 테이블 이름
+        joinColumns = @JoinColumn(name = "ano"), // Account 엔티티의 ID를 참조하는 FK 컬럼
+        indexes =  {
+            @Index(name = "idx_", columnList = "ano")
+        }
+    )
+    @Builder.Default
+    private Set<AccountImage> images = new HashSet<>();
+
     @CreatedDate
     private LocalDateTime createTime;
-    @LastModifiedDate
 
+    @LastModifiedDate
     @CreatedDate
     private LocalDateTime joinDate;
 
@@ -60,4 +84,8 @@ public class AccountEntity {
         this.refreshToken = refreshToken;
     }
 
+    public void addImage(String fileName) {
+        this.images.add(new AccountImage(fileName, this.images.size()));
+
+    }
 }
