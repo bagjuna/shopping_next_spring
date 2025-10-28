@@ -4,6 +4,7 @@ package org.zerock.apiserver.account.util;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.log4j.Log4j2;
+
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -18,7 +19,6 @@ public class JWTUtil {
     private static String key = "1234567890123456789012345678901234567890";
 
     public static String createToken(Map<String, Object> valueMap, int min) {
-
         SecretKey key = null;
 
         try {
@@ -29,14 +29,14 @@ public class JWTUtil {
         }
 
         return Jwts.builder().header()
-                .add("typ", "JWT")
-                .add("alg", "HS256")
-                .and()
-                .issuedAt(Date.from(ZonedDateTime.now().toInstant()))
-                .expiration((Date.from(ZonedDateTime.now()
-                        .plusMinutes(min).toInstant()))).claims(valueMap)
-                .signWith(key)
-                .compact();
+            .add("typ", "JWT")
+            .add("alg", "HS256")
+            .and()
+            .issuedAt(Date.from(ZonedDateTime.now().toInstant()))
+            .expiration((Date.from(ZonedDateTime.now()
+                .plusMinutes(min).toInstant()))).claims(valueMap)
+            .signWith(key)
+            .compact();
 
     }
 

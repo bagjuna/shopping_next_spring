@@ -25,14 +25,14 @@ import java.util.Optional;
 @Log4j2
 public class AccountServiceImpl implements AccountService{
 
-    private final AccountRepository repository;
+    private final AccountRepository accountRepository;
 
     private final AccountImageService accountImageService;
 
     @Override
     public SigninResponse getOne(String email, String password) {
 
-        Optional<AccountEntity> result = repository.findByEmail(email);
+        Optional<AccountEntity> result = accountRepository.findByEmail(email);
 
         if(result.isEmpty()){
             throw new IllegalArgumentException("Not Found");
@@ -40,12 +40,12 @@ public class AccountServiceImpl implements AccountService{
 
         AccountEntity entity = result.get();
 
-        if(entity.getPassword().equals(password) == false){
+        if(!entity.getPassword().equals(password)){
             throw new IllegalArgumentException("Password is not correct");
         }
 
         String accessToken = JWTUtil.createToken(Map.of("email", email), 60);
-        String refreshToken = JWTUtil.createToken(Map.of("email", email), 60*24);
+        String refreshToken = JWTUtil.createToken(Map.of("email", email), 60 * 24);
 
         entity.changeAccessToken(accessToken);
         entity.changeRefreshToken(refreshToken);
@@ -80,13 +80,13 @@ public class AccountServiceImpl implements AccountService{
                 .refreshToken(refreshToken)
                 .build();
 
-        return repository.save(entity);
+        return accountRepository.save(entity);
     }
 
     @Override
     public SigninResponse checkSocial(String email) {
         // 1. 해당 이메일로 등록된 계정을 찾거나, 없으면 새로 생성합니다.
-        AccountEntity account = repository.findById(email)
+        AccountEntity account = accountRepository.findById(email)
                 .orElseGet(() -> createNewAccount(email));
 
         // 2. JWT 토큰을 생성하고 엔티티에 업데이트합니다.
@@ -114,7 +114,7 @@ public class AccountServiceImpl implements AccountService{
                 .role("USER")
                 .build();
 
-        return repository.save(newAccount);
+        return accountRepository.save(newAccount);
     }
 
     // JWT 토큰을 생성하고 엔티티에 업데이트하는 메서드
@@ -124,26 +124,27 @@ public class AccountServiceImpl implements AccountService{
 
         account.changeAccessToken(accessToken);
         account.changeRefreshToken(refreshToken);
-        repository.save(account); // 토큰 변경 후 저장
+        accountRepository.save(account); // 토큰 변경 후 저장
     }
 
     @Override
     public SigninResponse update(AccountDTO accountDTO, MultipartFile[] files) {
 
-        accountImageService.uploadAccountImage(accountDTO, files);
-        AccountEntity entity = accountDTO.toEntity();
+        AccountEntity entity = accountRepository.selectOne(accountDTO.getEmail());
 
-        repository.save(entity);
+        entity.changeNickname(accountDTO.getNickname());
+
+        AccountEntity updatedEntity = accountImageService.uploadAccountImage(entity, files);
 
         return SigninResponse.builder()
-                .email(entity.getEmail())
-                .password(entity.getPassword())
-                .nickname(entity.getNickname())
-                .role(entity.getRole())
-                .joinDate(entity.getJoinDate())
+                .email(updatedEntity.getEmail())
+                .password(updatedEntity.getPassword())
+                .nickname(updatedEntity.getNickname())
+                .role(updatedEntity.getRole())
+                .joinDate(updatedEntity.getJoinDate())
                 .modifiedDate(LocalDateTime.now())
-                .accessToken(entity.getAccessToken())
-                .refreshToken(entity.getRefreshToken())
+                .accessToken(updatedEntity.getAccessToken())
+                .refreshToken(updatedEntity.getRefreshToken())
                 .build();
     }
 
@@ -151,7 +152,7 @@ public class AccountServiceImpl implements AccountService{
     public SigninResponse refresh(RefreshDTO refreshDTO) {
 
         //해당 email로 등록된 엔티티가 있는지 살펴본다.
-        Optional<AccountEntity> result = repository.findByRefreshToken(refreshDTO.getRefreshToken());
+        Optional<AccountEntity> result = accountRepository.findByRefreshToken(refreshDTO.getRefreshToken());
 
         //있다면 AccountDTO로 만들어서 반환
         //String email, String password, String nickname, String role, LocalDateTime joinDate, LocalDateTime modifiedDate
@@ -171,17 +172,17 @@ public class AccountServiceImpl implements AccountService{
         entity.changeAccessToken(accessToken);
         entity.changeRefreshToken(refreshToken);
 
-
         return SigninResponse.builder()
-                .email(entity.getEmail())
-                .password(entity.getPassword())
-                .nickname(entity.getNickname())
-                .role(entity.getRole())
-                .joinDate(entity.getJoinDate())
-                .modifiedDate(LocalDateTime.now())
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
+            .email(entity.getEmail())
+            .password(entity.getPassword())
+            .nickname(entity.getNickname())
+            .role(entity.getRole())
+            .joinDate(entity.getJoinDate())
+            .modifiedDate(LocalDateTime.now())
+            .accessToken(accessToken)
+            .refreshToken(refreshToken)
+            .profileImageURL(entity.getProfileImageUrl())
+            .build();
 
     }
 }

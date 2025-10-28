@@ -75,11 +75,16 @@ public class AccountController {
 
 
     @PostMapping("refresh")
-    public SigninResponse refresh( @RequestBody RefreshDTO refreshDTO) {
+    public SigninResponse refresh(@RequestBody RefreshDTO refreshDTO) {
 
         log.info("refresh................");
         log.info(refreshDTO);
 
         return service.refresh(refreshDTO);
     }
+
+    // @GetMapping("/test")
+    // public String test(@AuthenticationPrincipal String email) {
+    //     return "Account Controller Test Success";
+    // }
 }
