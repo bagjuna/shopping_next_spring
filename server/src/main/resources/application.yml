@@ -47,3 +47,6 @@ org:
     upload:
       folder: /Users/bagjun-a/temp/images
 
+
+jwt:
+  key: "your-secret-key-here"

@@ -19,6 +19,7 @@ import org.zerock.apiserver.product.entity.ProductImage;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -58,8 +59,7 @@ public class AccountEntity {
     @Builder.Default
     private Set<AccountImage> images = new HashSet<>();
 
-    @CreatedDate
-    private LocalDateTime createTime;
+    private String profileImageUrl;
 
     @LastModifiedDate
     @CreatedDate
@@ -88,4 +88,19 @@ public class AccountEntity {
         this.images.add(new AccountImage(fileName, this.images.size()));
 
     }
+
+    public void removeImages() {
+        this.images.clear();
+    }
+
+    public void addImages(List<String> uploadfileNames) {
+        uploadfileNames.forEach(
+            uploadfileName -> this.images.add(new AccountImage(uploadfileName, this.images.size())));
+    }
+
+    public void addMainImage(String fileName) {
+        this.profileImageUrl = fileName;
+        this.images.add(new AccountImage(fileName, images.size()));
+    }
+
 }

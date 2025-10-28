@@ -25,6 +25,8 @@ public class SigninResponse {
 
 	private String refreshToken;
 
+	private String profileImageURL;
+
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime joinDate;
 
@@ -34,7 +36,7 @@ public class SigninResponse {
 
 	@Builder
 	public SigninResponse(String email, String password, String nickname, String role, LocalDateTime joinDate,
-		LocalDateTime modifiedDate,  String accessToken, String refreshToken) {
+		LocalDateTime modifiedDate,  String accessToken, String refreshToken,String profileImageURL) {
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;
@@ -43,6 +45,7 @@ public class SigninResponse {
 		this.modifiedDate = modifiedDate;
 		this.accessToken = accessToken;
 		this.refreshToken = refreshToken;
+		this.profileImageURL = profileImageURL;
 	}
 
 
