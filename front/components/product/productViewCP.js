@@ -5,10 +5,12 @@ import {getServerSession} from "next-auth";
 import {authOptions} from "@/app/api/auth/[...nextauth]/route";
 // import { AddCartButton } from "./view/addCartButton";
 import AddCartButton from "./view/addCartButton"
+import {useAuthCheck} from "@/hooks/useAuthCheck";
 
 export default async function ProductViewCP({product, from}) {
 
-    const session =  await getServerSession(authOptions);
+    const session =  useAuthCheck();
+    
 
 
     console.log(product)
