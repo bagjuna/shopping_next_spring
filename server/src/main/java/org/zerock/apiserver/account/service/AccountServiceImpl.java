@@ -61,6 +61,7 @@ public class AccountServiceImpl implements AccountService{
                 .modifiedDate(entity.getModifiedDate())
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
+                .profileImageURL(entity.getProfileImageUrl())
                 .build();
         log("accountDTO: " + accountDTO);
         return accountDTO;
@@ -128,13 +129,13 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public SigninResponse update(AccountDTO accountDTO, MultipartFile[] files) {
+    public SigninResponse update(AccountDTO accountDTO, MultipartFile file) {
 
         AccountEntity entity = accountRepository.selectOne(accountDTO.getEmail());
 
         entity.changeNickname(accountDTO.getNickname());
 
-        AccountEntity updatedEntity = accountImageService.uploadAccountImage(entity, files);
+        AccountEntity updatedEntity = accountImageService.uploadProfileImage(entity, file);
 
         return SigninResponse.builder()
                 .email(updatedEntity.getEmail())
@@ -145,6 +146,7 @@ public class AccountServiceImpl implements AccountService{
                 .modifiedDate(LocalDateTime.now())
                 .accessToken(updatedEntity.getAccessToken())
                 .refreshToken(updatedEntity.getRefreshToken())
+                .profileImageURL(updatedEntity.getProfileImageUrl())
                 .build();
     }
 

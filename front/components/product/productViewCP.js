@@ -1,19 +1,13 @@
+'use client';
+
 import Image from "next/image"
 import Link from "next/link"
 
-import {getServerSession} from "next-auth";
-import {authOptions} from "@/app/api/auth/[...nextauth]/route";
-// import { AddCartButton } from "./view/addCartButton";
 import AddCartButton from "./view/addCartButton"
 import {useAuthCheck} from "@/hooks/useAuthCheck";
 
-export default async function ProductViewCP({product, from}) {
+export default function ProductViewCP({product, from}) {
 
-    const session =  useAuthCheck();
-    
-
-
-    console.log(product)
 
     return (
         <div className="flex flex-col items-center p-6 bg-gray-50 min-h-screen">

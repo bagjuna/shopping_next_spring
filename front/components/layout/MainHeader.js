@@ -3,11 +3,11 @@
 import Link from "next/link";
 import {useAuthCheck} from "@/hooks/useAuthCheck";
 import MenuCartCount from "@/components/menu/menuCartCount";
+import Image from "next/image";
 
 export default function MainHeader() {
     // 클라이언트 사이드에서 작동해야 하는 훅 사용
     const {session} = useAuthCheck()
-
     return (
         <header className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
             <div className="container mx-auto flex justify-between items-center py-4 px-6">
@@ -15,17 +15,40 @@ export default function MainHeader() {
                     <Link href="/">로고</Link>
                 </div>
                 <nav className="hidden md:flex items-center space-x-6">
-                    <Link href="/account/modify" className="text-gray-700 hover:text-blue-600 font-medium">마이페이지</Link>
+
+
                     <Link href="/product" className="text-gray-700 hover:text-blue-600 font-medium">상품 카탈로그</Link>
                     {!session &&
-                        <Link href="/account/signin" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">로그인</Link>
+                        <Link href="/account/signin"
+                              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">로그인</Link>
                     }
                     {session &&
                         <>
                             <MenuCartCount/>
-                            <Link href="/account/signout" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">로그아웃</Link>
+                            <Link href="/account/signout"
+                                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">로그아웃</Link>
                         </>
                     }
+                    {session && (
+                        <Link href="/account/modify"
+                        >
+                            <div style={{
+                                position: 'relative', // fill을 위한 필수 속성
+                                width: '40px',      // 원하는 프로필 크기
+                                height: '40px',     // 원하는 프로필 크기
+                                borderRadius: '50%', // 원형으로 만들기
+                                overflow: 'hidden'   // 이미지가 원 밖으로 삐져나가지 않게
+                            }}>
+                                <Image
+                                    src={`http://localhost:8080/s_${session?.user?.profileImageURL}`}
+                                    fill
+                                    style={{objectFit: 'cover'}} // 부모(div)를 꽉 채우되 비율 유지
+                                    alt="프로필 이미지" // 웹 접근성을 위해 alt 속성을 추가하는 것이 좋습니다.
+                                    href="/account/modify"
+                                />
+                            </div>
+                        </Link>
+                    )}
                 </nav>
             </div>
         </header>

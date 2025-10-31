@@ -1,5 +1,8 @@
+'use client';
+
 import Link from "next/link";
 import Image from "next/image";
+
 export default function ProductCatalogCP({products, total, current, size}) {
 
     if (!products || products.length === 0) {

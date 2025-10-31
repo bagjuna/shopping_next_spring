@@ -1,10 +1,5 @@
 import ProductViewCP from "@/components/product/productViewCP";
 
-export async function generateStaticParams() {
-    const arr = [{pno: '1'}, {pno: '2'}, {pno: '3'}];
-
-    return arr;
-}
 
 export default async function ProductViewPage({params, searchParams}) {
     const param = await params;
@@ -21,7 +16,6 @@ export default async function ProductViewPage({params, searchParams}) {
     console.log(product);
 
     const from = query.from ? decodeURIComponent(query.from) : '/product/catalog/1'
-    console.log("from:", from);
     return (
         <div>
             <div>Product View Page</div>
