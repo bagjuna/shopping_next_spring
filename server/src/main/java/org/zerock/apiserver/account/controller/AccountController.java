@@ -64,12 +64,12 @@ public class AccountController {
     }
 
     @PutMapping("modify")
-    public SigninResponse modify(AccountDTO accountDTO, @RequestParam(value = "files", required = false) MultipartFile[] files) {
+    public SigninResponse modify(AccountDTO accountDTO, @RequestParam(value = "file", required = false) MultipartFile file) {
 
         log.info("modify................");
         log.info(accountDTO);
 
-        return service.update(accountDTO, files);
+        return service.update(accountDTO, file);
 
     }
 

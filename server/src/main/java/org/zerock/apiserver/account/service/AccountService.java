@@ -18,7 +18,7 @@ public interface AccountService {
 
     SigninResponse checkSocial(String email);
 
-    SigninResponse update(AccountDTO accountDTO, @RequestParam(value = "files", required = false) MultipartFile[] files);
+    SigninResponse update(AccountDTO accountDTO, @RequestParam(value = "file", required = false) MultipartFile file);
 
     SigninResponse refresh(RefreshDTO refreshDTO);
 }

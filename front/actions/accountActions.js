@@ -26,24 +26,10 @@ export const putAccount = async (prevState, formData) => {
     updatedFormData.append('email', formData.get('email'));
     updatedFormData.append('nickname', formData.get('nickname'));
 
-    const fileNames = formData.getAll('fileNames')
+    const file = formData.get('file'); // 'getAll'이 아닌 'get'을 사용해 단일 파일을 받음
 
-    console.log("fileNames length: " + fileNames)
-    if(fileNames.length > 0){
-        fileNames.forEach(fileName => {
-            updatedFormData.append('fileNames', fileName);
-        })
-    }
-    // Append all files to the new FormData object
-    const files = formData.getAll('files');
-    if(files.length > 0) {
-        files.forEach(file => {
-            console.log("----------------------------------", file)
-            if (file && file.size > 0) {
-                updatedFormData.append('files', file);
-            }
-        });
-    }
+    if (file && file.size > 0)
+        updatedFormData.append('file', file);
 
 
     const res = await fetch(`${API_SERVER_HOST}/api/accounts/modify`, {

@@ -26,7 +26,7 @@ export default function RootLayout({children}) {
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
         <SessionProvider>
-            <MainHeader/>
+            <MainHeader />
             <div className="pt-10 max-w-xl mx-auto">
                 {children}
             </div>

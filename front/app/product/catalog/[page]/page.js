@@ -1,3 +1,4 @@
+
 import ProductCatalogCP from "@/components/product/productCatalogCP";
 
 export default async function ProductCatalogPage({params, searchParams}) {

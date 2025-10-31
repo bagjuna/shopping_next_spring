@@ -48,6 +48,8 @@ public class AccountEntity {
 
     private String refreshToken;
 
+    private String profileImageUrl;
+
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(
         name = "tbl_account_image", // 회원 이미지 정보를 저장할 테이블 이름
@@ -59,7 +61,6 @@ public class AccountEntity {
     @Builder.Default
     private Set<AccountImage> images = new HashSet<>();
 
-    private String profileImageUrl;
 
     @LastModifiedDate
     @CreatedDate
@@ -86,7 +87,7 @@ public class AccountEntity {
 
     public void addImage(String fileName) {
         this.images.add(new AccountImage(fileName, this.images.size()));
-
+        this.profileImageUrl = fileName;
     }
 
     public void removeImages() {
@@ -96,6 +97,7 @@ public class AccountEntity {
     public void addImages(List<String> uploadfileNames) {
         uploadfileNames.forEach(
             uploadfileName -> this.images.add(new AccountImage(uploadfileName, this.images.size())));
+        this.profileImageUrl = uploadfileNames.get(0);
     }
 
     public void addMainImage(String fileName) {

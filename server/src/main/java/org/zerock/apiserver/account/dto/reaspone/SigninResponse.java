@@ -20,7 +20,6 @@ public class SigninResponse {
 
 	private String role;
 
-
 	private String accessToken;
 
 	private String refreshToken;

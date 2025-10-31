@@ -65,7 +65,7 @@ export const authOptions = {
                 token.accessToken = result.accessToken;
                 token.refreshToken = result.refreshToken;
                 token.accessTokenExpires = Date.now() + (1000 * 60 * 60) //1h
-
+                token.profileImageURL = result.profileImageURL;
                 return token;
 
             }
@@ -80,6 +80,7 @@ export const authOptions = {
                     token.accessToken = user.accessToken;
                     token.refreshToken = user.refreshToken;
                     token.accessTokenExpires = Date.now() + (1000 * 60 * 60) //1h
+                    token.profileImageURL = user.profileImageURL;
                 }
             }
             // 토큰 만료 전이면 기존 토큰 반환
@@ -102,7 +103,7 @@ export const authOptions = {
             session.user.accessToken = token.accessToken;
             session.user.refreshToken = token.refreshToken;
             session.user.expireTime = token.expireTime;
-
+            session.user.profileImageURL = token.profileImageURL;
             return session;
         },
 
@@ -138,7 +139,7 @@ async function refreshAccessToken(token) {
         token.name = refreshedUser.nickname;
         token.accessToken = refreshedUser.accessToken;
         token.refreshToken = refreshedUser.refreshToken;
-
+        token.profileImageURL = refreshedUser.profileImageURL;
         token.accessTokenExpires = Date.now() + (60 * 60 *  1000); // 1시간으로 재설정
         return token;
     } catch (error) {
