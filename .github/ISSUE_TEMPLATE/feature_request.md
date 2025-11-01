@@ -1,20 +1,26 @@
----
-name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
-assignees: ''
+<!-- 
+📝 PR 제목 형식:
+<type>: <subject>
 
----
+예시:
+- feat(auth): 세션 기반 로그인 기능 추가
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+Type:
+- feat: 새로운 기능 추가
+- fix: 버그 수정
+- docs: 문서 관련 수정 (README 등)
+- test: 테스트 코드 추가/수정
+- refactor: 코드 리팩토링 (기능 변화 없음)
+- style: 포맷팅, 세미콜론, 들여쓰기 등 의미 없는 변경
+- chore: 빌드, 의존성, 패키지 관리 등
+- infra: 배포/서버 환경 구성 변경
+-->
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+## 📌 작업 개요
+- 
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
+## 🧩 변경 사항
+- 
 
-**Additional context**
-Add any other context or screenshots about the feature request here.
+## ⚠️ 이슈
+-  
