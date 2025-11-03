@@ -3,8 +3,8 @@ package org.zerock.apiserver.account;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.zerock.apiserver.account.entity.AccountEntity;
-import org.zerock.apiserver.account.repository.AccountRepository;
+import org.zerock.apiserver.domain.account.entity.AccountEntity;
+import org.zerock.apiserver.domain.account.repository.AccountRepository;
 
 @SpringBootTest
 public class AccountRepositoryTests {

@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
-import org.zerock.apiserver.product.dto.ProductDTO;
-import org.zerock.apiserver.product.entity.ProductEntity;
-import org.zerock.apiserver.product.repository.ProductRepository;
+import org.zerock.apiserver.domain.product.dto.ProductDTO;
+import org.zerock.apiserver.domain.product.entity.ProductEntity;
+import org.zerock.apiserver.domain.product.repository.ProductRepository;
 
 @SpringBootTest
 @Log4j2

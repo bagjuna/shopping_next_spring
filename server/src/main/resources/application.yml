@@ -50,3 +50,10 @@ org:
 
 jwt:
   key: "your-secret-key-here"
+  secret-key: hello123456789012345678901234567890
+
+discord:
+  400:
+    webhook-uri: ${DISCORD_WEBHOOK_URI_400}
+  500:
+    webhook-uri: ${DISCORD_WEBHOOK_URI_500}
