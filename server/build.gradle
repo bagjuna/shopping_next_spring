@@ -27,6 +27,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	testImplementation 'org.springframework.security:spring-security-test'
 	compileOnly 'org.projectlombok:lombok'
 
 	runtimeOnly 'com.mysql:mysql-connector-j'
@@ -47,6 +48,20 @@ dependencies {
 	// devtools
 	implementation 'org.springframework.boot:spring-boot-devtools'
 //	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+	// PDF 처리 라이브러리
+	implementation 'org.apache.pdfbox:pdfbox:2.0.30'
+
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	// 크롤링 위한 라이브러리
+	implementation 'org.jsoup:jsoup:1.17.2'
+	implementation 'org.seleniumhq.selenium:selenium-java:4.11.0'
+	implementation 'io.github.bonigarcia:webdrivermanager:5.4.1'
+
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.5'

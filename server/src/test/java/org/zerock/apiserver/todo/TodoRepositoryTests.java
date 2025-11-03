@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
-import org.zerock.apiserver.todo.entity.TodoEntity;
-import org.zerock.apiserver.todo.repository.TodoRepository;
+import org.zerock.apiserver.domain.todo.entity.TodoEntity;
+import org.zerock.apiserver.domain.todo.repository.TodoRepository;
 
 import lombok.extern.log4j.Log4j2;
 

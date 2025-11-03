@@ -40,7 +40,7 @@ export default function MainHeader() {
                                 overflow: 'hidden'   // 이미지가 원 밖으로 삐져나가지 않게
                             }}>
                                 <Image
-                                    src={`http://localhost:8080/s_${session?.user?.profileImageURL}`}
+                                    src={`http://localhost:8080/api/images/s_${session?.user?.profileImageURL}`}
                                     fill
                                     style={{objectFit: 'cover'}} // 부모(div)를 꽉 채우되 비율 유지
                                     alt="프로필 이미지" // 웹 접근성을 위해 alt 속성을 추가하는 것이 좋습니다.
