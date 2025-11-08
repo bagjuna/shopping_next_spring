@@ -83,8 +83,4 @@ public class AccountController {
         return service.refresh(refreshDTO);
     }
 
-    // @GetMapping("/test")
-    // public String test(@AuthenticationPrincipal String email) {
-    //     return "Account Controller Test Success";
-    // }
 }
