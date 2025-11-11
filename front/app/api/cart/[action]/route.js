@@ -58,6 +58,10 @@ export async function GET(request, {params}) {
 
         const res = await fetch(`http://localhost:8080/api/carts/list?account=${account}`, {
             method: 'GET',
+            headers: {
+                // session에서 꺼낸 accessToken을 Bearer 토큰으로 추가
+                'Authorization': `Bearer ${session.user.accessToken}`
+            }
         })
 
         const result = await res.json();
